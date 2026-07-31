@@ -672,6 +672,8 @@ az ad sp create-for-rbac --name "insightai-github-actions" --role contributor --
 
 This outputs a JSON object containing the credentials needed by `azure/login@v2`.
 
+Note that the `--role contributor` flag above grants the `insightai-github-actions` application the Contributor role assignment on the `insight-ai-resource-group` scope. Without this role assignment, the pipeline can authenticate but will be denied permission when it tries to push images, deploy resources, or manage the AKS cluster.
+
 Add this JSON as a GitHub secret:
 
 ```text
@@ -779,6 +781,20 @@ kubectl Cannot Access AKS
 
 ---
 
+## Create Kubernetes Secrets
+
+```yaml
+kubectl create secret generic insightai-secrets \
+  --from-literal=... \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
+
+Builds the `insightai-secrets` Secret from GitHub repository secrets and applies it to the cluster, so the pod's `envFrom` can inject them at runtime.
+
+If you add, rename, or remove any `--from-literal` value here, update the matching GitHub repository secret too.
+
+---
+
 ## Deploy Application
 
 ```yaml
@@ -798,6 +814,14 @@ kubectl expose deployment
 ```
 
 manually.
+
+Sometimes the deployment may fail because pods are unable to pull the image from ACR, shown as `ImagePullBackOff` or `ErrImagePull` when running:
+
+```bash
+kubectl get pods
+```
+
+If this happens, follow Step 9 in `deployment-Document.md` (Create Image Pull Secret) to create/patch the `acr-secret` and attach it to the default service account.
 
 ---
 
@@ -824,6 +848,3 @@ Waits until deployment completes successfully.
 This acts as a health check for the deployment process.
 
 If the deployment fails, the GitHub Action also fails.
-
-```
-```

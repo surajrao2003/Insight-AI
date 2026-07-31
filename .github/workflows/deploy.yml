@@ -48,14 +48,16 @@ jobs:
             --name ${{ secrets.AKS_CLUSTER_NAME }} \
             --overwrite-existing
             
+      # NOTE: Update the corresponding GitHub repository secrets if any of these values change.
       - name: Create Kubernetes Secrets
         run: |
           kubectl create secret generic insightai-secrets \
-            --from-literal=AZURE_OPENAI_ENDPOINT="${{ secrets.AZURE_OPENAI_ENDPOINT }}" \
             --from-literal=AZURE_OPENAI_CHAT_ENDPOINT="${{ secrets.AZURE_OPENAI_CHAT_ENDPOINT }}" \
-            --from-literal=AZURE_OPENAI_API_KEY="${{ secrets.AZURE_OPENAI_API_KEY }}" \
-            --from-literal=AZURE_OPENAI_API_EMBEDDING_VERSION="${{ secrets.AZURE_OPENAI_API_EMBEDDING_VERSION }}" \
+            --from-literal=AZURE_OPENAI_CHAT_API_KEY="${{ secrets.AZURE_OPENAI_CHAT_API_KEY }}" \
             --from-literal=AZURE_OPENAI_API_VERSION="${{ secrets.AZURE_OPENAI_API_VERSION }}" \
+            --from-literal=AZURE_OPENAI_EMBEDDING_ENDPOINT="${{ secrets.AZURE_OPENAI_EMBEDDING_ENDPOINT }}" \
+            --from-literal=AZURE_OPENAI_EMBEDDING_API_KEY="${{ secrets.AZURE_OPENAI_EMBEDDING_API_KEY }}" \
+            --from-literal=AZURE_OPENAI_API_EMBEDDING_VERSION="${{ secrets.AZURE_OPENAI_API_EMBEDDING_VERSION }}" \
             --from-literal=AZURE_SEARCH_ENDPOINT="${{ secrets.AZURE_SEARCH_ENDPOINT }}" \
             --from-literal=AZURE_SEARCH_API_KEY="${{ secrets.AZURE_SEARCH_API_KEY }}" \
             --from-literal=AZURE_SEARCH_INDEX_NAME="${{ secrets.AZURE_SEARCH_INDEX_NAME }}" \
