@@ -87,10 +87,7 @@ if __name__ == "__main__":
         "Top Growth Drivers": [
             'Increased Services revenue from advertising, App Store, and cloud services.',
             'Higher Mac sales driven by increased laptop demand.',
-            'Continued strong iPhone sales performance.',
-            'Ingest your first company financial statement (e.g., 10-K, 10-Q reports in PDF format) using the sidebar uploader.',
-            'Our AI engine will parse the financial metrics, risks, and growth drivers.',
-            '<button id="refreshBtn" class="refresh-button" title="Refresh data"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6a6 6 0 01-5.65 5.99L12 18a6 6 0 01-5.99-5.65L6 12H4a8 8 0 0016 0c0-4.42-3.58-8-8-8z"/></svg></button>t capital return program.'
+            'Continued strong iPhone sales performance.'
         ]
     }
 

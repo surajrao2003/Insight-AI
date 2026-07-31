@@ -46,6 +46,7 @@ def chunk_markdown(
 
 if __name__ == "__main__":
     import os
+    from pathlib import Path
     from langchain_openai import AzureOpenAIEmbeddings
 
     endpoint = os.getenv("AZURE_OPENAI_EMBEDDING_ENDPOINT")
@@ -65,7 +66,7 @@ if __name__ == "__main__":
         api_version=api_version
     )
 
-    markdown_file = "C:/Users/rjrao/Desktop/InsightAI/data/markdown/2024_Apple.md"
+    markdown_file = str(Path(__file__).resolve().parent.parent / "data" / "markdown" / "2024_Apple.md")
 
     chunks = chunk_markdown(
         markdown_file=markdown_file,
