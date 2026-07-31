@@ -202,18 +202,6 @@ Attach ACR to AKS.
 az aks update --resource-group insight-ai-resource-group --name insight-ai-cluster --attach-acr insightai
 ```
 
-Verify access.
-
-```bash
-az aks check-acr --resource-group insight-ai-resource-group --name insight-ai-cluster --acr insightai
-```
-
-Expected Output:
-
-```text
-Your cluster can pull images from insightai.azurecr.io!
-```
-
 ---
 
 # Step 9: Create Image Pull Secret
