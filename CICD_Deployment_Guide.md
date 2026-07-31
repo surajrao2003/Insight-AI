@@ -821,7 +821,7 @@ Sometimes the deployment may fail because pods are unable to pull the image from
 kubectl get pods
 ```
 
-If this happens, follow Step 9 in `deployment-Document.md` (Create Image Pull Secret) to create/patch the `acr-secret` and attach it to the default service account.
+If this happens, follow Step 9 in `manual_deployment.md` (Create Image Pull Secret) to create/patch the `acr-secret` and attach it to the default service account.
 
 ---
 
