@@ -528,7 +528,7 @@ name: Build and Deploy to AKS
 on:
   push:
     branches:
-      - cicd-setup
+      - main
 
 jobs:
 
@@ -601,7 +601,7 @@ This helps identify the workflow in the Actions dashboard.
 on:
   push:
     branches:
-      - cicd-setup
+      - main
 ```
 
 This tells GitHub when to execute the pipeline.
@@ -609,7 +609,7 @@ This tells GitHub when to execute the pipeline.
 Whenever code is pushed to:
 
 ```text
-cicd-setup
+main
 ```
 
 the workflow automatically starts.
