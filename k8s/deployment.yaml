@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: insightai
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: insightai
+
+  template:
+    metadata:
+      labels:
+        app: insightai
+
+    spec:
+      containers:
+      - name: insightai
+
+        image: insightai.azurecr.io/insightai:latest
+
+        imagePullPolicy: Always
+
+        envFrom:
+        - secretRef:
+            name: insightai-secrets
+
+        ports:
+        - containerPort: 8000

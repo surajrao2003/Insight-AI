@@ -1,4 +1,4 @@
-# Azure AKS Deployment Guide - AI Powered Investor Intelligence Platform
+# Azure AKS Deployment Guide - InsightAI Platform
 
 ## Overview
 
@@ -94,6 +94,8 @@ az account show
 
 # Step 4: Login to Azure Container Registry (ACR)
 
+Assuming the ACR name is `insightai`.
+
 Login using Azure CLI.
 
 ```bash
@@ -169,10 +171,12 @@ az acr repository list --name insightai --output table
 
 # Step 7: Connect to AKS
 
+Assuming the resource group is `insight-ai-resource-group` and the AKS cluster is `insight-ai-cluster`.
+
 Download cluster credentials.
 
 ```bash
-az aks get-credentials --resource-group rg-inv-intelligence --name insightai-cluster --overwrite-existing
+az aks get-credentials --resource-group insight-ai-resource-group --name insight-ai-cluster --overwrite-existing
 ```
 
 Verify connection.
@@ -195,19 +199,7 @@ Ready
 Attach ACR to AKS.
 
 ```bash
-az aks update --resource-group rg-inv-intelligence --name inv-intelligence-aks --attach-acr invintelligence
-```
-
-Verify access.
-
-```bash
-az aks check-acr --resource-group rg-inv-intelligence --name inv-intelligence-aks --acr invintelligence
-```
-
-Expected Output:
-
-```text
-Your cluster can pull images from invintelligence.azurecr.io!
+az aks update --resource-group insight-ai-resource-group --name insight-ai-cluster --attach-acr insightai
 ```
 
 ---
@@ -219,15 +211,15 @@ If AKS cannot pull images directly from ACR, create a Docker Registry Secret.
 Retrieve ACR credentials.
 
 ```bash
-az acr credential show --name invintelligence
+az acr credential show --name insightai
 ```
 
 Create secret.
 
 ```bash
 kubectl create secret docker-registry acr-secret \
-  --docker-server=invintelligence.azurecr.io \
-  --docker-username=invintelligence \
+  --docker-server=insightai.azurecr.io \
+  --docker-username=insightai \
   --docker-password=<acr-password>
 ```
 
@@ -244,7 +236,7 @@ kubectl patch serviceaccount default -p "{\"imagePullSecrets\": [{\"name\": \"ac
 Create deployment.
 
 ```bash
-kubectl create deployment invint --image=invintelligence.azurecr.io/invint:v1
+kubectl create deployment insightai --image=insightai.azurecr.io/insightai:v1
 ```
 
 Verify deployment.
@@ -257,7 +249,7 @@ Expected Output:
 
 ```text
 NAME     READY
-invint   1/1
+insightai   1/1
 ```
 
 ---
@@ -296,7 +288,7 @@ kubectl logs <pod-name>
 Example:
 
 ```bash
-kubectl logs invint-xxxxxxxxxx-yyyyy
+kubectl logs insightai-xxxxxxxxxx-yyyyy
 ```
 
 Follow logs in real time.
@@ -324,7 +316,7 @@ kubectl describe pod <pod-name>
 Create public Load Balancer.
 
 ```bash
-kubectl expose deployment invint --type=LoadBalancer --port=80 --target-port=8000
+kubectl expose deployment insightai --type=LoadBalancer --port=80 --target-port=8000
 ```
 
 Verify service.
@@ -337,7 +329,7 @@ Expected Output:
 
 ```text
 NAME     TYPE           EXTERNAL-IP
-invint   LoadBalancer   20.xxx.xxx.xxx
+insightai   LoadBalancer   20.xxx.xxx.xxx
 ```
 
 ---
@@ -387,7 +379,7 @@ kubectl get deployments
 Describe Deployment
 
 ```bash
-kubectl describe deployment invint
+kubectl describe deployment insightai
 ```
 
 Describe Pod
@@ -411,19 +403,19 @@ kubectl logs -f <pod-name>
 Restart Deployment
 
 ```bash
-kubectl rollout restart deployment invint
+kubectl rollout restart deployment insightai
 ```
 
 Delete Deployment
 
 ```bash
-kubectl delete deployment invint
+kubectl delete deployment insightai
 ```
 
 Delete Service
 
 ```bash
-kubectl delete service invint
+kubectl delete service insightai
 ```
 
 Delete Secret
@@ -451,13 +443,13 @@ az aks list --output table
 Get AKS Credentials
 
 ```bash
-az aks get-credentials --resource-group rg-inv-intelligence --name inv-intelligence-aks --overwrite-existing
+az aks get-credentials --resource-group insight-ai-resource-group --name insight-ai-cluster --overwrite-existing
 ```
 
 Delete AKS Cluster
 
 ```bash
-az aks delete --resource-group rg-inv-intelligence --name inv-intelligence-aks --yes --no-wait
+az aks delete --resource-group insight-ai-resource-group --name insight-ai-cluster --yes --no-wait
 ```
 
 Verify Deletion
@@ -479,19 +471,19 @@ az acr list --output table
 Show Registry Details
 
 ```bash
-az acr show --name invintelligence
+az acr show --name insightai
 ```
 
 Show Registry Credentials
 
 ```bash
-az acr credential show --name invintelligence
+az acr credential show --name insightai
 ```
 
 Delete Registry
 
 ```bash
-az acr delete --name invintelligence --resource-group rg-inv-intelligence --yes
+az acr delete --name insightai --resource-group insight-ai-resource-group --yes
 ```
 
 ---

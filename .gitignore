@@ -53,3 +53,4 @@ dist/
 # Sensitive files
 secrets.json
 credentials.json
+patch.json
