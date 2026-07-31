@@ -2,7 +2,7 @@
 
 <img width="1906" height="945" alt="InsightAI Dashboard" src="assets/dashboard-preview.png" />
 
-This repository contains the Python backend for an AI-powered Investor Intelligence Platform, including document ingestion, semantic search, KPI extraction, Azure AI Search integration, Azure OpenAI integration, PostgreSQL-based KPI storage, and a CI/CD pipeline that builds and deploys the application to Azure Kubernetes Service via Azure Container Registry.
+The repo contains the Python backend for an AI-powered Investor Intelligence Platform. It ingests financial documents, extracts KPIs using Azure OpenAI models and Azure AI Search through RAG, stores them in PostgreSQL database, and ships to Azure Kubernetes Service through an automated CI/CD pipeline.
 
 For the phase-by-phase build history of this project, see [`project_journey.md`](project_journey.md).
 
